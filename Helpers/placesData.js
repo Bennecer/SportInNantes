@@ -7,8 +7,7 @@ export default data = [
       rating: 4,
       address : "Rue Gaston Michel, Nantes",
       sports: [
-         "Gymnastique",
-         "Natation"
+         "natation"
       ],
       hours: "10h - 21h",
       latitude: 47.2096281,
@@ -21,12 +20,9 @@ export default data = [
       rating: 4,
       address : "2 boulevard Maurice Bertin, Nantes",
       sports: [
-         "Athlétisme",
-         "Handball",
-         "Rugby",
-         "Handisport",
-         "Omnisport",
-         "Football"
+         "hand",
+         "rugby",
+         "foot"
       ],
       hours: "10h - 20h",
       latitude: 47.2096751,
@@ -39,7 +35,7 @@ export default data = [
      rating: 3,
      address : "Boulevard de Berlin, Nantes",
      sports: [
-        "Natation"
+        "natation"
      ],
      hours: "12h - 19h",
      latitude: 47.2164638,
@@ -52,11 +48,10 @@ export default data = [
       rating: 3,
       address : "38 rue Appert, Nantes",
       sports: [
-         "Basket-Ball",
-         "Yoga",
-         "Badminton",
-         "Handball",
-         "Volley"
+         "basket",
+         "badminton",
+         "hand",
+         "volley"
       ],
       hours: "11h - 18h",
       latitude: 47.2246567,
@@ -69,12 +64,11 @@ export default data = [
       rating: 4,
       address : "72 route du Pontereau, Nantes",
       sports: [
-         "Ping-Pong",
-         "Gymnastique",
-         "Football",
-         "Basket-Ball",
-         "Volley",
-         "Handball"
+         "ping",
+         "foot",
+         "basket",
+         "volley",
+         "hand"
       ],
       hours: "09h - 18h",
       latitude: 47.2388937,
@@ -87,13 +81,11 @@ export default data = [
       rating: 3,
       address : "29 Rue Paul Bellamy, Nantes",
       sports: [
-         "Ping-Pong",
-         "Gymnastique",
-         "Football",
-         "Basket-Ball",
-         "Volley",
-         "Handball",
-         "Danse"
+         "ping",
+         "foot",
+         "basket",
+         "volley",
+         "hand",
       ],
       hours: "10h - 20h",
       latitude: 47.2234405,

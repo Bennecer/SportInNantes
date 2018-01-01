@@ -1,17 +1,34 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, FlatList, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SportItem from './SportItem';
+import { Button } from 'react-native-elements';
+import sports from '../../Helpers/sportsData'
+
+const numberColumns = 3;
 
 class Sports extends React.Component{
 
     constructor(props){
         super(props);
+        this.state = {
+            sports: sports
+        }
     }
 
     render(){
         return(
             <View style={styles.main_container}>
-                <Image style={styles.logo} source={require('../../assets/iconSportInNantes.png')}/>
-                <Text style={styles.welcome}>Sports !</Text>
+                <FlatList
+                    data={sports}
+                    keyExtractor = {(item) => item.name}
+                    style={styles.list}
+                    numColumns={numberColumns}
+                    renderItem={({item}) => <SportItem sport={item}/>}
+                />
+                <TouchableOpacity style={styles.button} underlayColor='#fff'>
+                    <Text style={styles.buttonText}>Confirmer</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -19,8 +36,35 @@ class Sports extends React.Component{
 
 const styles = StyleSheet.create({
     main_container: {
-        flex: 1
+        flex: 1,
+        marginTop: 20,
     },
+
+    list: {
+        flex: 1,
+    },
+    button: {
+        paddingTop:5,
+        paddingBottom:3,
+        backgroundColor:"#892685",
+        borderRadius:20,
+        width: 120,
+        position: 'absolute',
+        bottom: 20,
+        right: 8,
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 1, width: 1 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 1, //IOS
+        elevation: 2, // Android
+    },
+    buttonText: {
+        fontSize: 18,
+        fontFamily: 'poppins_bold',
+        color: 'white',
+        textAlign: 'center'
+    },
+
     logo : {
         marginTop: 30,
         alignSelf: "center",
@@ -42,7 +86,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         fontFamily: 'poppins',
         textAlign: "center"
-    }
+    },
 });
 
 export default Sports;

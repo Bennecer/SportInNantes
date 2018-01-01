@@ -1,7 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
+import sports from '../../Helpers/sportsData'
+
+const numberColumns= 3;
 
 class PlaceDetail extends React.Component {
 
@@ -12,6 +15,7 @@ class PlaceDetail extends React.Component {
             isLoading: true,
             date: new Date(),
             today: new Date(),
+            sports: sports
         }
     }
 
@@ -39,16 +43,19 @@ class PlaceDetail extends React.Component {
                         </View>
                     </View>
                     <Text style={styles.address}>{place.address}</Text>
+                    <FlatList
+                        data={place.sport}
+                        keyExtractor = {(item) => item}
+                        style={styles.list}
+                        numColumns={numberColumns}
+                        renderItem={({item}) => <Image style={styles.sportImage} />}
+                    />
                     <Text style={styles.sports}>{place.sports}</Text>
                     <Text style={styles.hours}>Horaires : {place.hours}</Text>
                     <Text style={styles.create}>Vous pouvez rapidement créer un événement sur ce lieu et à la date sélectionnée en appuyant sur le bouton ci-dessous. Il ne vous restera plus qu’à préciser le sport, l’heure et le nombre de participants !</Text>
-                    <View style={styles.create_container}>
-                        <Button style={styles.createButton} title="Créer" linearGradientProps={{
-                                                                            colors: ['#892685', '#892685'],
-                                                                            start: { x: 0, y: 0.5 },
-                                                                            end: { x: 1, y: 0.5 },
-                                                                            }}></Button>
-                    </View>
+                    <TouchableOpacity style={styles.button} underlayColor='#fff'>
+                        <Text style={styles.buttonText}>Créer</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             )
         }
@@ -171,19 +178,34 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
 
-  create: {
-      margin: 10,
-      fontFamily: 'poppins'
-  },
-  create_container: {
-    alignSelf: 'center',
-    width: 80
-  },
-  createButton: {
-    color: "#892685",
-    width: 10,
-    height: 10
-  },
+    create: {
+        margin: 10,
+        fontFamily: 'poppins'
+    },
+        create_container: {
+        alignSelf: 'center',
+        width: 80
+    },
+
+    button: {
+        alignSelf: 'center',
+        paddingTop:5,
+        paddingBottom:3,
+        backgroundColor:"#892685",
+        borderRadius:20,
+        width: 80,
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 1, width: 1 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 1, //IOS
+        elevation: 2, // Android
+    },
+    buttonText: {
+        fontSize: 15,
+        fontFamily: 'poppins_bold',
+        color: 'white',
+        textAlign: 'center'
+    },
 
   loading_container: {
     position: 'absolute',
