@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
-import Sports from './Sports';
 
-class Home extends React.Component{
+class Sports extends React.Component{
 
     constructor(props){
         super(props);
@@ -12,9 +11,7 @@ class Home extends React.Component{
         return(
             <View style={styles.main_container}>
                 <Image style={styles.logo} source={require('../../assets/iconSportInNantes.png')}/>
-                <Text style={styles.welcome}>Bienvenue !</Text>
-                <Text style={styles.intro}>Quels sports voulez-vous pratiquer aujourd'hui ?</Text>
-                <Sports></Sports>
+                <Text style={styles.welcome}>Sports !</Text>
             </View>
         );
     }
@@ -48,4 +45,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Home;
+export default Sports;
