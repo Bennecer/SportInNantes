@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text, FlatList, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import SportItem from './SportItem';
-import { Button } from 'react-native-elements';
 import sports from '../../Helpers/sportsData'
 
 const numberColumns = 3;
@@ -12,11 +10,21 @@ class Sports extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            sports: sports
+            sports: sports,
+            sportsSelected: []
         }
+
+        this.handlerSports = this.handlerSports.bind(this)
+    }
+
+    handlerSports(sportsSelectedArray) {
+        this.setState({
+            sportsSelected: sportsSelectedArray
+        })
     }
 
     render(){
+        console.log(this.props)
         return(
             <View style={styles.main_container}>
                 <FlatList
@@ -24,9 +32,9 @@ class Sports extends React.Component{
                     keyExtractor = {(item) => item.name}
                     style={styles.list}
                     numColumns={numberColumns}
-                    renderItem={({item}) => <SportItem sport={item}/>}
+                    renderItem={({item}) => <SportItem handlerSports = {this.handlerSports} sport={item} sportsSelected={this.state.sportsSelected}/>}
                 />
-                <TouchableOpacity style={styles.button} underlayColor='#fff'>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Places", {sportsSelected : this.state.sportsSelected})} style={styles.button} underlayColor='#fff'>
                     <Text style={styles.buttonText}>Confirmer</Text>
                 </TouchableOpacity>
             </View>

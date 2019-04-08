@@ -23,7 +23,8 @@ export default class App extends React.Component {
   render() {
     return this.state && this.state.fontLoaded ?
       <View style={{flex:1}}>
-        <GeneralStatusBarColor backgroundColor="#892685" barStyle="light-content" />  
+        <GeneralStatusBarColor backgroundColor="#892685" barStyle="light-content" /> 
+        
         <Navigation/>
       </View>
     :null

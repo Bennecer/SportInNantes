@@ -17,12 +17,19 @@ const PlacesStackNavigator = createStackNavigator({
     },
 },{
     headerMode:'none',
-}
-);
+});
+
+const HomeStackNavigator = createStackNavigator({
+    Home : {
+        screen : Home,
+    },
+},{
+    headerMode:'none',
+});
 
 const tabNavigator = createBottomTabNavigator({
     Home: {
-        screen: Home,
+        screen: HomeStackNavigator,
         navigationOptions : {
             tabBarIcon: ({focused}) => {
                 return <Icon name="home" type="font-awesome" color={focused ? "#EE7123" : "#892685"} size={40}></Icon>

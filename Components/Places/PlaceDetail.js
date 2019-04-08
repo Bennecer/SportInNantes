@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
-import sports from '../../Helpers/sportsData'
+import sports from '../../Helpers/sportsData';
 
-const numberColumns= 3;
+const numberColumns= 4;
 
 class PlaceDetail extends React.Component {
 
@@ -30,6 +30,14 @@ class PlaceDetail extends React.Component {
     _displayPlace(){
         const place = this.state.place;
         if(place != undefined){
+            let sportsPracticed = [];
+            for(let i=0; i<sports.length; i++){
+                for(let j=0; j<place.sports.length; j++){
+                    if(place.sports[j] == sports[i].name){
+                        sportsPracticed.push(sports[i]);
+                    }
+                }
+            }
             return(
                 <ScrollView style={styles.scrollview_container}>
                     <View style={styles.image_container}>
@@ -44,13 +52,12 @@ class PlaceDetail extends React.Component {
                     </View>
                     <Text style={styles.address}>{place.address}</Text>
                     <FlatList
-                        data={place.sport}
+                        data={sportsPracticed}
                         keyExtractor = {(item) => item}
                         style={styles.list}
                         numColumns={numberColumns}
-                        renderItem={({item}) => <Image style={styles.sportImage} />}
+                        renderItem={({item}) => <Image style={styles.sportImage} source={item.image}/>}
                     />
-                    <Text style={styles.sports}>{place.sports}</Text>
                     <Text style={styles.hours}>Horaires : {place.hours}</Text>
                     <Text style={styles.create}>Vous pouvez rapidement créer un événement sur ce lieu et à la date sélectionnée en appuyant sur le bouton ci-dessous. Il ne vous restera plus qu’à préciser le sport, l’heure et le nombre de participants !</Text>
                     <TouchableOpacity style={styles.button} underlayColor='#fff'>
@@ -170,6 +177,12 @@ const styles = StyleSheet.create({
   sports: {
     fontFamily: 'poppins',
     margin: 20
+  },
+  sportImage: {
+    resizeMode: 'contain',
+    width: 70,
+    height: 70,
+    margin: 10
   },
 
   hours: {

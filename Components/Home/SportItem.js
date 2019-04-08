@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import sports from '../../Helpers/sportsData'
 
 class SportItem extends React.Component{
 
@@ -14,9 +15,26 @@ class SportItem extends React.Component{
     changeColor(){
         if(this.state.selected){
             this.setState({selected: false});
+            let sportsSelected = this.props.sportsSelected;
+            sportsSelected.filter(sport => sport !== this.props.sport.name);
+            for(let i=0; i<sportsSelected.length; i++){
+                if(sportsSelected[i] === this.props.sport.name){
+                    sportsSelected.splice(i, 1);
+                }
+            }
+            this.props.handlerSports(sportsSelected);
         }
         else{
             this.setState({selected: true});
+            let sportsSelected = this.props.sportsSelected;
+            let isAlreadyThere = false;
+            for(let i=0; i<sportsSelected.length; i++){
+                if(sportsSelected[i] === this.props.sport.name){
+                    isAlreadyThere = true;
+                }
+            }
+            if(!isAlreadyThere) sportsSelected.push(this.props.sport.name)
+            this.props.handlerSports(sportsSelected);
         }
     }
 
