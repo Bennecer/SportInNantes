@@ -1,11 +1,12 @@
 import React from 'react';
-import { createStackNavigator, createBottomTabNavigator, createAppContainer} from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createAppContainer, StackNavigator} from 'react-navigation';
 import { Icon } from 'react-native-elements'
 import Home from '../Components/Home/Home';
 import PlaceDetail from '../Components/Places/PlaceDetail';
 import Places from '../Components/Places/Places';
 import Events from '../Components/Events/Events';
 import Profile from '../Components/Profile/Profile';
+import Login from '../Components/Login/Login';
 
 
 const PlacesStackNavigator = createStackNavigator({
@@ -66,4 +67,12 @@ const tabNavigator = createBottomTabNavigator({
         showIcon: true
     }
 })
-export default createAppContainer(tabNavigator);
+
+const ModalStack = createStackNavigator({
+    logout:{screen:Login},
+    login:{screen:tabNavigator},
+},{
+    mode:'modal',
+    headerMode:'none'
+})
+export default createAppContainer(ModalStack);

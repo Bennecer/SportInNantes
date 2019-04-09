@@ -1,14 +1,18 @@
 import React from 'react';
-import Navigation from './Navigation/Navigation';
-import { View } from 'react-native';
+import Navigation from './Navigation/Navigation'
+import { View, StyleSheet } from 'react-native';
 import GeneralStatusBarColor from './Components/GeneralStatusBarColor';
 import { Font } from 'expo';
 
 export default class App extends React.Component {
 
-  state = {
-    fontLoaded: false,
-  };
+  constructor(props){
+    super(props);
+
+    this.state = {
+      fontLoaded: false,
+    };
+  }
 
   async componentDidMount() {
     await Font.loadAsync({
@@ -24,10 +28,8 @@ export default class App extends React.Component {
     return this.state && this.state.fontLoaded ?
       <View style={{flex:1}}>
         <GeneralStatusBarColor backgroundColor="#892685" barStyle="light-content" /> 
-        
         <Navigation/>
       </View>
     :null
   }
 }
-

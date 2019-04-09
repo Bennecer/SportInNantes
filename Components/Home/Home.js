@@ -14,7 +14,7 @@ class Home extends React.Component{
                 <Image style={styles.logo} source={require('../../assets/iconSportInNantes.png')}/>
                 <Text style={styles.welcome}>Bienvenue !</Text>
                 <Text style={styles.intro}>Quels sports voulez-vous pratiquer aujourd'hui ?</Text>
-                <Sports></Sports>
+                <Sports navigation={this.props.navigation}></Sports>
             </View>
         );
     }

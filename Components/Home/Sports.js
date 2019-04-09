@@ -24,7 +24,6 @@ class Sports extends React.Component{
     }
 
     render(){
-        console.log(this.props)
         return(
             <View style={styles.main_container}>
                 <FlatList

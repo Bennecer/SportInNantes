@@ -19,8 +19,10 @@ class Places extends React.Component {
   componentDidMount(){
     this.setState({
         places: places,
-        isLoading: false
+        isLoading: false,
+        sportsSelected: this.props.navigation.state.params
     })
+    console.log(this.props.navigation.state.params)
   }
 
   _displayLoading(){

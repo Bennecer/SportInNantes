@@ -7,6 +7,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@around25/jwt-utils": "^1.0.1",
     "expo": "^32.0.0",
     "expo-cli": "^2.14.0",
     "react": "16.5.0",
