@@ -13,7 +13,9 @@ class Places extends React.Component {
         isLoading : true,
         date: new Date(),
         today: new Date(),
+        sportsSelected: []
     }
+    console.log("yoooooooooo"+this.props)
   }
 
   componentDidMount(){
@@ -22,7 +24,7 @@ class Places extends React.Component {
         isLoading: false,
         sportsSelected: this.props.navigation.state.params
     })
-    console.log(this.props.navigation.state.params)
+    
   }
 
   _displayLoading(){

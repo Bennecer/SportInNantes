@@ -1,20 +1,39 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Sports from './Sports';
+import sports from '../../Helpers/sportsData'
 
 class Home extends React.Component{
 
     constructor(props){
         super(props);
+        this.state = {
+            sports: sports,
+            sportsSelected: []
+        }
+
+        this.handlerSports = this.handlerSports.bind(this)
+    }
+
+    handlerSports(sportsSelectedArray) {
+        this.setState({
+            sportsSelected: sportsSelectedArray
+        })
     }
 
     render(){
         return(
             <View style={styles.main_container}>
-                <Image style={styles.logo} source={require('../../assets/iconSportInNantes.png')}/>
-                <Text style={styles.welcome}>Bienvenue !</Text>
-                <Text style={styles.intro}>Quels sports voulez-vous pratiquer aujourd'hui ?</Text>
-                <Sports navigation={this.props.navigation}></Sports>
+                <ScrollView>
+                    <Image style={styles.logo} source={require('../../assets/iconSportInNantes.png')}/>
+                    <Text style={styles.welcome}>Bienvenue !</Text>
+                    <Text style={styles.intro}>Quels sports voulez-vous pratiquer aujourd'hui ?</Text>
+                    <Sports navigation={this.props.navigation} handlerSports = {this.handlerSports} sportsSelected={this.state.sportsSelected}></Sports>
+                </ScrollView>
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Places", {sportsSelected : this.state.sportsSelected, navigation : this.props.navigation})} style={styles.button} underlayColor='#fff'>
+                    <Text style={styles.buttonText}>Confirmer</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -22,7 +41,7 @@ class Home extends React.Component{
 
 const styles = StyleSheet.create({
     main_container: {
-        flex: 1
+        flex: 1,
     },
     logo : {
         marginTop: 30,
@@ -45,7 +64,30 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         fontFamily: 'poppins',
         textAlign: "center"
-    }
+    },
+
+
+    button: {
+        paddingTop:5,
+        paddingBottom:3,
+        backgroundColor:"#892685",
+        borderRadius:20,
+        width: 120,
+        position: 'absolute',
+        bottom: 20,
+        right: 8,
+        shadowColor: 'rgba(0,0,0, .4)', // IOS
+        shadowOffset: { height: 1, width: 1 }, // IOS
+        shadowOpacity: 1, // IOS
+        shadowRadius: 1, //IOS
+        elevation: 2, // Android
+    },
+    buttonText: {
+        fontSize: 18,
+        fontFamily: 'poppins_bold',
+        color: 'white',
+        textAlign: 'center'
+    },
 });
 
 export default Home;

@@ -21,6 +21,7 @@ class Sports extends React.Component{
         this.setState({
             sportsSelected: sportsSelectedArray
         })
+        this.props.handlerSports(this.state.sportsSelected);
     }
 
     render(){
@@ -33,9 +34,6 @@ class Sports extends React.Component{
                     numColumns={numberColumns}
                     renderItem={({item}) => <SportItem handlerSports = {this.handlerSports} sport={item} sportsSelected={this.state.sportsSelected}/>}
                 />
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Places", {sportsSelected : this.state.sportsSelected})} style={styles.button} underlayColor='#fff'>
-                    <Text style={styles.buttonText}>Confirmer</Text>
-                </TouchableOpacity>
             </View>
         );
     }
@@ -45,6 +43,7 @@ const styles = StyleSheet.create({
     main_container: {
         flex: 1,
         marginTop: 20,
+        marginBottom: 70
     },
 
     list: {

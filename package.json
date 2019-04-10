@@ -14,10 +14,12 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-datepicker": "^1.7.2",
     "react-native-elements": "^1.1.0",
+    "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.6.1",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
+    "reinput": "^2.5.3",
     "yarn": "^1.15.2"
   },
   "devDependencies": {
