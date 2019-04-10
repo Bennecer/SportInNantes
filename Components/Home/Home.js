@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Sports from './Sports';
 import sports from '../../Helpers/sportsData'
+import sportsList from '../../Helpers/sportsList'
 
 class Home extends React.Component{
 
@@ -9,7 +10,7 @@ class Home extends React.Component{
         super(props);
         this.state = {
             sports: sports,
-            sportsSelected: []
+            sportsSelected: sportsList
         }
 
         this.handlerSports = this.handlerSports.bind(this)
@@ -31,7 +32,7 @@ class Home extends React.Component{
                     <Sports navigation={this.props.navigation} handlerSports = {this.handlerSports} sportsSelected={this.state.sportsSelected}></Sports>
                 </ScrollView>
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Places", {sportsSelected : this.state.sportsSelected, navigation : this.props.navigation})} style={styles.button} underlayColor='#fff'>
+                <TouchableOpacity onPress={() => this.props.navigation.push("Places", {sportsSelected : this.state.sportsSelected.length>0 ? this.state.sportsSelected : sportsList})} style={styles.button} underlayColor='#fff'>
                     <Text style={styles.buttonText}>Confirmer</Text>
                 </TouchableOpacity>
             </View>

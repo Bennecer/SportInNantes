@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, FlatList, ActivityIndicator, Text } from 'react-native';
 import places from '../../Helpers/placesData'
+import sportsList from '../../Helpers/sportsList'
 import PlaceItem from './PlaceItem'
 import DatePicker from 'react-native-datepicker';
 
@@ -13,18 +14,14 @@ class Places extends React.Component {
         isLoading : true,
         date: new Date(),
         today: new Date(),
-        sportsSelected: []
+        sportsSelected: this.props.navigation.getParam('sportsSelected') ? this.props.navigation.getParam('sportsSelected') : sportsList
     }
-    console.log("yoooooooooo"+this.props)
   }
 
   componentDidMount(){
     this.setState({
-        places: places,
         isLoading: false,
-        sportsSelected: this.props.navigation.state.params
     })
-    
   }
 
   _displayLoading(){
@@ -39,7 +36,7 @@ class Places extends React.Component {
 
   _displayDetailForPlace = (idPlace) => {
       const place = this.state.places.find(place => place.id === idPlace);
-      this.props.navigation.navigate("PlaceDetail", { idPlace: idPlace, place: place, date: this.state.date, changeDate: this.changeDate});
+      this.props.navigation.navigate("PlaceDetail", { idPlace: idPlace, place: place, date: this.state.date, changeDate: this.changeDate, sportsSelectedDetail : this.state.sportsSelected});
   }
 
   changeDate = (date) =>{
@@ -75,11 +72,24 @@ class Places extends React.Component {
               <FlatList
                   data={this.state.places}
                   keyExtractor = {(item) => item.id.toString()}
-                  onEndReachedThreshold = {0.5}
-                  onEndReached = {() => {
-                      console.log("onEndReached");
+                  renderItem={({item, index}) => {
+                    let isSelected= false;
+                    for(let i=0; i<item.sports.length; i++){
+                      for(let j=0; j<this.state.sportsSelected.length; j++){
+                        if(item.sports[i] === this.state.sportsSelected[j]){
+                          isSelected = true;
+                        }
+                      }
+                    }
+                    if(isSelected){
+                      return <PlaceItem place={item} date={this.state.date} displayDetailForPlace={this._displayDetailForPlace}/>
+                    }
+                    else{
+                      if(index === this.state.places.length-1){
+                        return <Text style={styles.noPlaces}>Aucun lieu correspondant à votre recherche</Text>
+                      }
+                    }
                   }}
-                  renderItem={({item}) => <PlaceItem place={item} date={this.state.date} displayDetailForPlace={this._displayDetailForPlace}/>}
               />
               {this._displayLoading()}
           </View>
@@ -106,6 +116,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+
+  noPlaces: {
+    alignSelf: 'center',
+    fontSize: 14,
+    fontFamily: 'poppins_bold',
+    marginTop: 200
+  }
 });
 
 export default Places

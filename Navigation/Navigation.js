@@ -5,6 +5,7 @@ import Home from '../Components/Home/Home';
 import PlaceDetail from '../Components/Places/PlaceDetail';
 import Places from '../Components/Places/Places';
 import Events from '../Components/Events/Events';
+import EventDetail from '../Components/Events/EventDetail';
 import Profile from '../Components/Profile/Profile';
 import Login from '../Components/Login/Login';
 
@@ -15,6 +16,17 @@ const PlacesStackNavigator = createStackNavigator({
     },
     PlaceDetail : {
         screen : PlaceDetail
+    },
+},{
+    headerMode:'none',
+});
+
+const EventsStackNavigator = createStackNavigator({
+    Events : {
+        screen : Events,
+    },
+    EventDetail : {
+        screen : EventDetail
     },
 },{
     headerMode:'none',
@@ -46,7 +58,7 @@ const tabNavigator = createBottomTabNavigator({
         }
     },
     Events: {
-        screen: Events,
+        screen: EventsStackNavigator,
         navigationOptions : {
             tabBarIcon: ({focused}) => {
                 return <Icon name="list-ul" type="font-awesome" color={focused ? "#EE7123" : "#892685"} size={40}></Icon>
@@ -69,7 +81,7 @@ const tabNavigator = createBottomTabNavigator({
 })
 
 const ModalStack = createStackNavigator({
-    logout:{screen:Login},
+    //logout:{screen:Login},
     login:{screen:tabNavigator},
 },{
     mode:'modal',

@@ -15,7 +15,8 @@ class PlaceDetail extends React.Component {
             isLoading: true,
             date: new Date(),
             today: new Date(),
-            sports: sports
+            sports: sports,
+            sportsSelected: this.props.navigation.getParam('sportsSelectedDetail')
         }
     }
 
@@ -56,7 +57,22 @@ class PlaceDetail extends React.Component {
                         keyExtractor = {(item) => item}
                         style={styles.list}
                         numColumns={numberColumns}
-                        renderItem={({item}) => <Image style={styles.sportImage} source={item.image}/>}
+                        renderItem={({item}) => {
+                            let isSelected= false;
+                            for(let i=0; i<item.length; i++){
+                                for(let j=0; j<this.state.sportsSelected.length; j++){
+                                    if(item[i].name === this.state.sportsSelected[j]){
+                                    isSelected = true;
+                                    }
+                                }
+                            }
+                            if(isSelected){
+                                return <Image style={styles.sportImage} source={item.imageSelected}/>
+                            }
+                            else{
+                                return <Image style={styles.sportImage} source={item.image}/>
+                            }
+                        }}
                     />
                     <Text style={styles.hours}>Horaires : {place.hours}</Text>
                     <Text style={styles.create}>Vous pouvez rapidement créer un événement sur ce lieu et à la date sélectionnée en appuyant sur le bouton ci-dessous. Il ne vous restera plus qu’à préciser le sport, l’heure et le nombre de participants !</Text>
@@ -124,7 +140,7 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     flexDirection: 'column',
-    width: '100%'
+    width: '100%',
   },
 
   top_container: {
@@ -211,7 +227,8 @@ const styles = StyleSheet.create({
         shadowOffset: { height: 1, width: 1 }, // IOS
         shadowOpacity: 1, // IOS
         shadowRadius: 1, //IOS
-        elevation: 2, // Android
+        elevation: 2, // Android,
+        marginBottom: 20
     },
     buttonText: {
         fontSize: 15,

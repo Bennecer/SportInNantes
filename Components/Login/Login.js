@@ -20,7 +20,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" enabled style={styles.base}>
+      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={50} enabled style={styles.base}>
         <Text style={styles.appName}>Sport'In Nantes</Text>
         <Text style={styles.intro}>Equipements sportifs et comunauté sportive Nantaise !</Text>
         <Image style={styles.logo} source={require('../../assets/iconSportInNantes.png')}/>
@@ -48,7 +48,7 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   base: {
-    flexGrow: 1
+    //flexGrow: 1
   },
   logo : {
     marginVertical: 30,

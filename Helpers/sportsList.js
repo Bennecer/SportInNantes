@@ -1,0 +1,2 @@
+export default sportsList = ['americain', 'basket', "arc", 'badminton', 'baseball', 'boxe', 'foot', 'hand', 
+'hockey', 'kayak', 'muscu', 'natation', 'ping', 'rando', 'rugby', 'tennis', 'velo', 'volley']
