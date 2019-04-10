@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, Text, ScrollView, AsyncStorage, TouchableOpacity } from 'react-native';
 import Sports from './Sports';
 import sports from '../../Helpers/sportsData'
 import sportsList from '../../Helpers/sportsList'
+
 
 class Home extends React.Component{
 
@@ -12,6 +13,14 @@ class Home extends React.Component{
             sports: sports,
             sportsSelected: sportsList
         }
+        if(AsyncStorage.getItem('sportsSelected') !== null){
+            AsyncStorage.setItem('sportsSelected', JSON.stringify([]), () => {
+            })
+        }
+        else{
+            AsyncStorage.mergeItem('sportsSelected', JSON.stringify([]), () => {
+            })
+        }
 
         this.handlerSports = this.handlerSports.bind(this)
     }
@@ -20,6 +29,27 @@ class Home extends React.Component{
         this.setState({
             sportsSelected: sportsSelectedArray
         })
+    }
+
+    _storeData = async () => {
+        try {
+            if(AsyncStorage.getItem('sportsSelected') !== null){
+                AsyncStorage.setItem('sportsSelected', JSON.stringify(this.state.sportsSelected), () => {
+                    this.props.navigation.push("Places", {sportsSelected : this.state.sportsSelected.length>0 ? this.state.sportsSelected : sportsList})
+                })
+            }
+            else{
+                AsyncStorage.mergeItem('sportsSelected', JSON.stringify(this.state.sportsSelected), () => {
+                    this.props.navigation.push("Places", {sportsSelected : this.state.sportsSelected.length>0 ? this.state.sportsSelected : sportsList})
+                })
+            }
+        } catch (e) {
+          // saving error
+        }
+    }
+
+    confirmButton(){
+        this._storeData();
     }
 
     render(){
@@ -32,7 +62,7 @@ class Home extends React.Component{
                     <Sports navigation={this.props.navigation} handlerSports = {this.handlerSports} sportsSelected={this.state.sportsSelected}></Sports>
                 </ScrollView>
 
-                <TouchableOpacity onPress={() => this.props.navigation.push("Places", {sportsSelected : this.state.sportsSelected.length>0 ? this.state.sportsSelected : sportsList})} style={styles.button} underlayColor='#fff'>
+                <TouchableOpacity onPress={() => this.confirmButton()} style={styles.button} underlayColor='#fff'>
                     <Text style={styles.buttonText}>Confirmer</Text>
                 </TouchableOpacity>
             </View>

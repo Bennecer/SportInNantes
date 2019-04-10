@@ -1,8 +1,10 @@
 import React from 'react'
-import { StyleSheet, View, FlatList, ActivityIndicator, Text } from 'react-native';
+import { StyleSheet, AsyncStorage, View, FlatList, ActivityIndicator, Text } from 'react-native';
 import events from '../../Helpers/profilesData'
 import EventItem from './EventItem'
 import DatePicker from 'react-native-datepicker';
+import sportsList from '../../Helpers/sportsList';
+import { NavigationEvents } from "react-navigation";
 
 class Events extends React.Component {
 
@@ -13,7 +15,13 @@ class Events extends React.Component {
         isLoading : true,
         date: new Date(),
         today: new Date(),
+        sportsSelected: sportsList
     }
+    AsyncStorage.getItem('sportsSelected', (err, result) => {
+      this.setState({
+        sportsSelected: JSON.parse(result).length > 0 ? JSON.parse(result) : sportsList
+      })
+    })
   }
 
   componentDidMount(){
@@ -37,13 +45,32 @@ class Events extends React.Component {
       this.props.navigation.navigate("EventDetail", { idEvent: idEvent, event: event});
   }
 
+  _getData = async () => {
+    try {
+      AsyncStorage.getItem('sportsSelected', (err, result) => {
+        this.setState({
+          sportsSelected: JSON.parse(result).length > 0 ? JSON.parse(result) : sportsList
+        })
+      })
+    } catch(e) {
+      // error reading value
+    }
+  }
+
   changeDate = (date) =>{
     this.setState({date: date});
   }
 
   render(){
+    let hasEvents = false;
       return(
           <View style={styles.main_container}>
+            <NavigationEvents
+              onDidFocus={payload => {
+                this._getData();
+                this.forceUpdate();
+              }}
+            />
               <DatePicker
                   style={styles.datepicker}
                   date={this.state.date}
@@ -71,20 +98,20 @@ class Events extends React.Component {
                   data={this.state.events}
                   keyExtractor = {(item) => item.id.toString()}
                   renderItem={({item, index}) => {
-                    let isSelected= true;
-                    /*for(let i=0; i<item.sports.length; i++){
-                      for(let j=0; j<this.state.sportsSelected.length; j++){
-                        if(item.sports[i] === this.state.sportsSelected[j]){
-                          isSelected = true;
-                        }
+                    let isSelected= false;
+                    for(let j=0; j<this.state.sportsSelected.length; j++){
+                      if(item.sportData === this.state.sportsSelected[j]){
+                        isSelected = true;
+                        hasEvents = true;
                       }
-                    }*/
+                    }
+                    
                     if(isSelected){
                       return <EventItem event={item} displayDetailForEvent={this._displayDetailForEvent}/>
                     }
                     else{
-                      if(index === this.state.events.length-1){
-                        return <Text style={styles.noEvents}>Aucun événement à cette date.</Text>
+                      if(index === this.state.events.length-1 && !hasEvents){
+                        return <Text style={styles.noEvents}>Aucun événement correspondant à votre recherche.</Text>
                       }
                     }
                   }}
@@ -119,7 +146,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 14,
     fontFamily: 'poppins_bold',
-    marginTop: 200
+    marginTop: 200,
+    textAlign: 'center'
   }
 });
 

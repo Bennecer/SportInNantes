@@ -5,6 +5,7 @@ export default profiles = [
       profilePic: require('../assets/profilePics/marc.png'),
       bio: "Salut ! Je m'appelle Marc, j'ai hâte de faire votre connaissance !",
       sport: "Natation",
+      sportData: "natation",
       sportPic: require('../assets/sports/natation.png'),
       place : {
          name: "Gymnase Léo Lagrange",
@@ -38,6 +39,7 @@ export default profiles = [
       profilePic: require('../assets/profilePics/jacques.png'),
       bio: "Salut ! Je m'appelle Jacques, j'ai hâte de faire votre connaissance !",
       sport: "Handball",
+      sportData: "hand",
       sportPic: require('../assets/sports/hand.png'),
       place : {
          name: "Stade Michel Lecointre",
@@ -79,6 +81,7 @@ export default profiles = [
       profilePic: require('../assets/profilePics/justine.png'),
       bio: "Salut ! Je m'appelle Justine, j'ai hâte de faire votre connaissance !",
       sport: "Natation",
+      sportData: "natation",
       sportPic: require('../assets/sports/natation.png'),
       place : {
          name: "Piscine Petite Amazonie",
@@ -105,6 +108,7 @@ export default profiles = [
       profilePic: require('../assets/profilePics/sophie.png'),
       bio: "Salut ! Je m'appelle Sophie, j'ai hâte de faire votre connaissance !",
       sport: "Basket",
+      sportData: "basket",
       sportPic: require('../assets/sports/basket.png'),
       place : {
          name: "A S P T T - Salle Ovinet",
@@ -153,6 +157,7 @@ export default profiles = [
       profilePic: require('../assets/profilePics/sylvain.png'),
       bio: "Salut ! Je m'appelle Sylvain, j'ai hâte de faire votre connaissance !",
       sport: "Ping-Pong",
+      sportData: "ping",
       sportPic: require('../assets/sports/ping.png'),
       place : {
          name: "Saint-Médard de Doulon",
@@ -193,6 +198,7 @@ export default profiles = [
       profilePic: require('../assets/profilePics/julie.png'),
       bio: "Salut ! Je m'appelle Julie, j'ai hâte de faire votre connaissance !",
       sport: "Volley",
+      sportData: "volley",
       sportPic: require('../assets/sports/volley.png'),
       place : {
          id: 6,

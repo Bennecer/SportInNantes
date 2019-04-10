@@ -44,6 +44,7 @@ class Places extends React.Component {
   }
 
   render(){
+    let hasSports = false;
       return(
           <View style={styles.main_container}>
               <DatePicker
@@ -78,6 +79,7 @@ class Places extends React.Component {
                       for(let j=0; j<this.state.sportsSelected.length; j++){
                         if(item.sports[i] === this.state.sportsSelected[j]){
                           isSelected = true;
+                          hasSports = true;
                         }
                       }
                     }
@@ -85,7 +87,7 @@ class Places extends React.Component {
                       return <PlaceItem place={item} date={this.state.date} displayDetailForPlace={this._displayDetailForPlace}/>
                     }
                     else{
-                      if(index === this.state.places.length-1){
+                      if(index === this.state.places.length-1 && !hasSports){
                         return <Text style={styles.noPlaces}>Aucun lieu correspondant à votre recherche</Text>
                       }
                     }
