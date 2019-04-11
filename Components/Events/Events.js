@@ -31,7 +31,6 @@ class Events extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    //console.log("nextState", nextState, "nextProps", nextProps)
     return true;
   }
 
@@ -55,7 +54,6 @@ class Events extends React.Component {
       this.setState({
         sportsSelected: JSON.parse(result).length > 0 ? JSON.parse(result) : sportsList
       })
-      console.log("in get data", this.state.sportsSelected)
       this.forceUpdate();
     }) 
   }
@@ -65,14 +63,12 @@ class Events extends React.Component {
   }
 
   render(){
-    console.log("render");
     let hasEvents = false;
       return(
           <View style={styles.main_container}>
             <NavigationEvents
               onDidFocus={payload => {
                 this._getData();
-                console.log("in render", this.state.sportsSelected)
               }}
             />
               <DatePicker
@@ -111,7 +107,6 @@ class Events extends React.Component {
                     }
                     
                     if(isSelected){
-                      console.log(item)
                       return <EventItem event={item} displayDetailForEvent={this._displayDetailForEvent}/>
                     }
                     else{

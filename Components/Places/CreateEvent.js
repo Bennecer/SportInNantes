@@ -17,7 +17,6 @@ import { Icon } from "react-native-elements";
 import DatePicker from 'react-native-datepicker';
 import { TextInput } from "react-native-gesture-handler";
 
-
 class CreateEvent extends React.Component {
   constructor(props){
     super(props);
@@ -35,13 +34,13 @@ class CreateEvent extends React.Component {
       this.setState({
           place: this.props.navigation.state.params.place,
           isLoading: false,
-          date: this.props.navigation.state.params.date,
           sportSelected: this.props.navigation.state.params.place.sports[0]
       })
   }
 
   createEvent(){
-    let dateEvent = 'Vendredi '+this.state.date.getDate()+ ' Avril à 15h';
+    console.log(this.state.date)
+    let dateEvent = 'Vendredi '+this.state.date.split('-')[0]+ ' Avril à 15h';
     let event = {
       id: 7,
       name: "Axel",
@@ -74,9 +73,13 @@ class CreateEvent extends React.Component {
       newEvents.push(event)
     }).then(() => {
       AsyncStorage.setItem('myEvents', JSON.stringify(newEvents), () => {
-        console.log(newEvents)
+        this.props.navigation.navigate("Profile");
       })
     })
+  }
+
+  changeDate = (date) =>{
+    this.setState({date: date});
   }
 
   _displayPlaceCreate() {
