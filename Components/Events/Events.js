@@ -30,6 +30,11 @@ class Events extends React.Component {
     })
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    //console.log("nextState", nextState, "nextProps", nextProps)
+    return true;
+  }
+
   _displayLoading(){
     if(this.state.isLoading){
         return(
@@ -46,16 +51,13 @@ class Events extends React.Component {
   }
 
   _getData = async () => {
-    try {
-      AsyncStorage.getItem('sportsSelected', (err, result) => {
-        this.setState({
-          sportsSelected: JSON.parse(result).length > 0 ? JSON.parse(result) : sportsList
-        })
-        console.log(this.state.sportsSelected)
+    await AsyncStorage.getItem('sportsSelected', (err, result) => {
+      this.setState({
+        sportsSelected: JSON.parse(result).length > 0 ? JSON.parse(result) : sportsList
       })
-    } catch(e) {
-      // error reading value
-    }
+      console.log("in get data", this.state.sportsSelected)
+      this.forceUpdate();
+    }) 
   }
 
   changeDate = (date) =>{
@@ -63,13 +65,14 @@ class Events extends React.Component {
   }
 
   render(){
+    console.log("render");
     let hasEvents = false;
       return(
           <View style={styles.main_container}>
             <NavigationEvents
               onDidFocus={payload => {
                 this._getData();
-                console.log(this.state.sportsSelected)
+                console.log("in render", this.state.sportsSelected)
               }}
             />
               <DatePicker
@@ -108,6 +111,7 @@ class Events extends React.Component {
                     }
                     
                     if(isSelected){
+                      console.log(item)
                       return <EventItem event={item} displayDetailForEvent={this._displayDetailForEvent}/>
                     }
                     else{

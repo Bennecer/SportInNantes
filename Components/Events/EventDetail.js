@@ -13,7 +13,6 @@ import {
 import { Icon } from "react-native-elements";
 
 const numberColumns = 4;
-let isParticipating = false;
 
 class EventDetail extends React.Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class EventDetail extends React.Component {
     if(this.state.isParticipating){
       let tab = this.state.event;
       for(let i=0; i<this.state.event.participants.length; i++){
-        if(tab.participants[i].name === "Alex"){
+        if(tab.participants[i].name === "Axel"){
           tab.participants.splice(i, 1)
         }
       }
@@ -44,25 +43,34 @@ class EventDetail extends React.Component {
         isParticipating : false,
         event: tab
       })
-      let myEvents = JSON.parse(AsyncStorage.getItem('myEvents'));
-      myEvents.push(this.state.event);
-      if(myEvents.length < 0){
-        AsyncStorage.setItem('myEvents', JSON.stringify(myEvents), () => {
+      let newEvents = [];
+      AsyncStorage.getItem('myEvents', (err, result) => {
+        newEvents = JSON.parse(result);
+        for(let j=0; j<newEvents.length; j++){
+          if(newEvents[j].id === this.state.event.id){
+            newEvents.splice(j, 1)
+          }
+        }
+        AsyncStorage.setItem('myEvents', JSON.stringify(newEvents), () => {
         })
-      }
-      else{
-          AsyncStorage.mergeItem('myEvents', JSON.stringify(myEvents), () => {
-          })
-      }
+      }) 
     }
     else{
       let tab = this.state.event;
-      tab.participants.push({name: 'Alex', profilePic: require('../../assets/profilePics/alex.png')})
+      tab.participants.push({name: 'Axel', profilePic: require('../../assets/profilePics/axel.png')})
       this.setState({
         isParticipating : true,
         event: tab
       })
-      //TODO enlever du storage
+      let newEvents = [];
+      AsyncStorage.getItem('myEvents', (err, result) => {
+        newEvents = JSON.parse(result);
+        newEvents.push(this.state.event)
+      }).then(() => {
+        AsyncStorage.setItem('myEvents', JSON.stringify(newEvents), () => {
+          
+        })
+      })
     }
   }
 

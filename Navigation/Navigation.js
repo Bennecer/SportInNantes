@@ -8,6 +8,7 @@ import Events from '../Components/Events/Events';
 import EventDetail from '../Components/Events/EventDetail';
 import Profile from '../Components/Profile/Profile';
 import Login from '../Components/Login/Login';
+import CreateEvent from '../Components/Places/CreateEvent';
 
 
 const PlacesStackNavigator = createStackNavigator({
@@ -17,6 +18,9 @@ const PlacesStackNavigator = createStackNavigator({
     PlaceDetail : {
         screen : PlaceDetail
     },
+    CreateEvent : {
+        screen: CreateEvent
+    }
 },{
     headerMode:'none',
 });
@@ -81,7 +85,7 @@ const tabNavigator = createBottomTabNavigator({
 })
 
 const ModalStack = createStackNavigator({
-    //logout:{screen:Login},
+    logout:{screen:Login},
     login:{screen:tabNavigator},
 },{
     mode:'modal',

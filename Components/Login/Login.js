@@ -27,11 +27,13 @@ export default class Login extends Component {
         
         <View style={styles.inputs}>
           <Reinput
+            secure= {false}
             label='Email'
             onChangeText={(email) => this.setState({email})}
             activeColor="#892685"
           />
           <Reinput
+            secure= {true}
             label='Mot de Passe'
             onChangeText={(mdp) => this.setState({mdp})}
             activeColor="#892685"

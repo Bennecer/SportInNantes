@@ -11,38 +11,37 @@ import {
   AsyncStorage
 } from "react-native";
 import EventItem from "../Events/EventItem"
-import events from "../../Helpers/profilesData";
 import { NavigationEvents } from "react-navigation";
-
-const numberColumns = 4;
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: undefined,
+      events: [],
       isLoading: true
     };
+
+    AsyncStorage.getItem('myEvents', (err, result) => {
+      this.setState({
+        events: JSON.parse(result).length > 0 ? JSON.parse(result) : []
+      })
+    })
   }
 
   componentDidMount() {
     this.setState({
-      events: events,
       isLoading: false
     });
-    this._getData();
   }
 
-  componentDidUpdate() {
-    this._getData();
-  }
 
-  _getData = async () => {
+  _getDataEvents = async () => {
     try {
       AsyncStorage.getItem("myEvents", (err, result) => {
         this.setState({
-          events: result !== null ? JSON.parse(result) : []
+          events: JSON.parse(result).length > 0 ? JSON.parse(result) : []
         })
+        this.forceUpdate();
       });
     } catch (e) {
       // error reading value
@@ -65,37 +64,30 @@ class Profile extends React.Component {
   }
 
   render() {
-    //const eventPlace = this.props.navigation.state.params.idEvent;
-    const { goBack } = this.props.navigation;
     return (
       <View style={styles.main_container}>
         <NavigationEvents
           onDidFocus={payload => {
-            this._getData();
+            this._getDataEvents();
           }}
         />
         <ScrollView style={styles.scrollview_container}>
           <Image
             style={styles.profilePic}
-            source={require("../../assets/profilePics/alex.png")}
+            source={require("../../assets/profilePics/axel.png")}
           />
-          <Text style={styles.name_text}>Alex</Text>
+          <Text style={styles.name_text}>Axel</Text>
           <Text style={styles.description_title}>Description</Text>
-          <Text style={styles.description_text}>Salut ! Je m'appelle Alex, hâte de faire votre connaissance !</Text>
+          <Text style={styles.description_text}>Salut ! Je m'appelle Axel, hâte de faire votre connaissance !</Text>
 
           <Text style={styles.participants_title}>{this.state.events.length > 0 ? 'Mes événements' : ''}</Text>
 
           <FlatList
             data={this.state.events}
-            keyExtractor={item => item}
+            keyExtractor={item => item.name}
             style={styles.list}
             renderItem={({ item, index }) => {
-              if (this.state.events.length > 0) {
-                return (
-                  //TODO get du storage
-                  <EventItem event={item} displayDetailForEvent={this._displayDetailForEvent}/>
-                );
-              }
+              return <EventItem event={item} displayDetailForEvent={this._displayDetailForEvent}/>
             }}
           />
           <Text style={styles.description_title}>Appréciation Globale</Text>
@@ -148,9 +140,13 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
 
+  list: {
+    marginBottom: 10
+  },
+
   rating: {
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 0,
     fontSize: 20,
     color: "#666666",
     fontFamily: "poppins_bold"

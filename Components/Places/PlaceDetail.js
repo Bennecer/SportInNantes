@@ -28,6 +28,10 @@ class PlaceDetail extends React.Component {
         })
     }
 
+    createEvent(){
+        this.props.navigation.navigate("CreateEvent", {place: this.state.place, date: this.state.date});
+    }
+
     _displayPlace(){
         const place = this.state.place;
         if(place != undefined){
@@ -76,7 +80,7 @@ class PlaceDetail extends React.Component {
                     />
                     <Text style={styles.hours}>Horaires : {place.hours}</Text>
                     <Text style={styles.create}>Vous pouvez rapidement créer un événement sur ce lieu et à la date sélectionnée en appuyant sur le bouton ci-dessous. Il ne vous restera plus qu’à préciser le sport, l’heure et le nombre de participants !</Text>
-                    <TouchableOpacity style={styles.button} underlayColor='#fff'>
+                    <TouchableOpacity onPress={() => this.createEvent()} style={styles.button} underlayColor='#fff'>
                         <Text style={styles.buttonText}>Créer</Text>
                     </TouchableOpacity>
                 </ScrollView>

@@ -13,12 +13,21 @@ class Home extends React.Component{
             sports: sports,
             sportsSelected: sportsList
         }
-        if(AsyncStorage.getItem('sportsSelected') !== null){
+        if(AsyncStorage.getItem('sportsSelected') === null){
             AsyncStorage.setItem('sportsSelected', JSON.stringify([]), () => {
             })
         }
         else{
             AsyncStorage.mergeItem('sportsSelected', JSON.stringify([]), () => {
+            })
+        }
+
+        if(AsyncStorage.getItem('myEvents') === null){
+            AsyncStorage.setItem('myEvents', JSON.stringify([]), () => {
+            })
+        }
+        else{
+            AsyncStorage.setItem('myEvents', JSON.stringify([]), () => {
             })
         }
 
