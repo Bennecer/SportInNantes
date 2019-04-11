@@ -7,19 +7,21 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  AsyncStorage
 } from "react-native";
-import { Icon, Button } from "react-native-elements";
-import sports from "../../Helpers/sportsData";
+import { Icon } from "react-native-elements";
 
 const numberColumns = 4;
+let isParticipating = false;
 
 class EventDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       event: undefined,
-      isLoading: true
+      isLoading: true,
+      isParticipating: false
     };
   }
 
@@ -28,6 +30,40 @@ class EventDetail extends React.Component {
       event: this.props.navigation.state.params.event,
       isLoading: false
     });
+  }
+
+  participate(){
+    if(this.state.isParticipating){
+      let tab = this.state.event;
+      for(let i=0; i<this.state.event.participants.length; i++){
+        if(tab.participants[i].name === "Alex"){
+          tab.participants.splice(i, 1)
+        }
+      }
+      this.setState({
+        isParticipating : false,
+        event: tab
+      })
+      let myEvents = JSON.parse(AsyncStorage.getItem('myEvents'));
+      myEvents.push(this.state.event);
+      if(myEvents.length < 0){
+        AsyncStorage.setItem('myEvents', JSON.stringify(myEvents), () => {
+        })
+      }
+      else{
+          AsyncStorage.mergeItem('myEvents', JSON.stringify(myEvents), () => {
+          })
+      }
+    }
+    else{
+      let tab = this.state.event;
+      tab.participants.push({name: 'Alex', profilePic: require('../../assets/profilePics/alex.png')})
+      this.setState({
+        isParticipating : true,
+        event: tab
+      })
+      //TODO enlever du storage
+    }
   }
 
   _displayEvent() {
@@ -92,8 +128,8 @@ class EventDetail extends React.Component {
               }
             }}
           />
-          <TouchableOpacity style={styles.button} underlayColor="#fff">
-            <Text style={styles.buttonText}>Participer</Text>
+          <TouchableOpacity onPress={() => this.participate()} style={!this.state.isParticipating ? styles.button : styles.buttonDisabled} underlayColor="#fff">
+            <Text style={styles.buttonText}>{!this.state.isParticipating ? 'Participer' : "Annuler"}</Text>
           </TouchableOpacity>
         </ScrollView>
       );
@@ -268,6 +304,21 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 3,
     backgroundColor: "#892685",
+    borderRadius: 20,
+    width: 120,
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    elevation: 2, // Android,
+    marginBottom: 20,
+    marginTop: 10
+  },
+  buttonDisabled: {
+    alignSelf: "center",
+    paddingTop: 5,
+    paddingBottom: 3,
+    backgroundColor: "#666666",
     borderRadius: 20,
     width: 120,
     shadowColor: "rgba(0,0,0, .4)", // IOS

@@ -24,9 +24,6 @@ export default profiles = [
       date: "Mercredi 17 Avril à 15h",
       participants: [
          {
-            name: "Alex",
-            profilePic: require('../assets/profilePics/alex.png'),
-         },{
             name: "Julie",
             profilePic: require('../assets/profilePics/julie.png'),
          }
@@ -60,9 +57,6 @@ export default profiles = [
       date: "Jeudi 18 Avril à 10h",
       participants: [
          {
-            name: "Alex",
-            profilePic: require('../assets/profilePics/alex.png'),
-         },{
             name: "Julie",
             profilePic: require('../assets/profilePics/julie.png'),
          },{
@@ -141,9 +135,6 @@ export default profiles = [
          },{
             name: "Marc",
             profilePic: require('../assets/profilePics/marc.png'),
-         },{
-            name: "Alex",
-            profilePic: require('../assets/profilePics/alex.png'),
          },{
             name: "Julie",
             profilePic: require('../assets/profilePics/julie.png'),

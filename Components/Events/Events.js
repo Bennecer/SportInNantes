@@ -51,6 +51,7 @@ class Events extends React.Component {
         this.setState({
           sportsSelected: JSON.parse(result).length > 0 ? JSON.parse(result) : sportsList
         })
+        console.log(this.state.sportsSelected)
       })
     } catch(e) {
       // error reading value
@@ -68,7 +69,7 @@ class Events extends React.Component {
             <NavigationEvents
               onDidFocus={payload => {
                 this._getData();
-                this.forceUpdate();
+                console.log(this.state.sportsSelected)
               }}
             />
               <DatePicker

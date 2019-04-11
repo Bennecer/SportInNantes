@@ -8,7 +8,6 @@ const numberColumns= 4;
 class EventItem extends React.Component {
   render() {
     const {event, displayDetailForEvent} = this.props;
-      
     return (
       <TouchableOpacity 
         onPress={() => displayDetailForEvent(event.id)}
